@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import type { Prefecture, GraphValues } from "../types";
 import { PrefHandlers } from "./hooks";
 import { fetchGraphValues } from "./fetchGraphValues";
+import * as style from "./styles.css";
 
 function CheckBoxWithLabel({
   prefecture,
@@ -45,7 +46,7 @@ function CheckBoxWithLabel({
     }
   }
   return (
-    <div>
+    <div className={style.item}>
       <input
         type="checkbox"
         checked={prefecture.isSelected}
@@ -54,8 +55,14 @@ function CheckBoxWithLabel({
           handleChange();
         }}
         id={id}
+        className={style.checkbox}
       />
-      <label htmlFor={id}>{prefecture.name}</label>
+      <label
+        htmlFor={id}
+        className={isLoading ? style.loadingLabel : style.normalLabel}
+      >
+        {prefecture.name}
+      </label>
     </div>
   );
 }
@@ -68,7 +75,7 @@ export function Prefectures({
   prefHandlers: PrefHandlers;
 }): JSX.Element {
   return (
-    <div>
+    <div className={style.container}>
       {prefectures.map((prefecture: Prefecture, index: number) => (
         <CheckBoxWithLabel
           key={index}
