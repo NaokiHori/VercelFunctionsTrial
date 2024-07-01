@@ -4,7 +4,7 @@ const END_POINT = "/api/prefectures";
 
 interface ApiResponse {
   message: string | null;
-  result: { prefCode: number; prefName: string }[];
+  result: { code: number; name: string }[];
 }
 
 export async function fetchAllPrefectures(): Promise<Prefecture[]> {
@@ -17,10 +17,9 @@ export async function fetchAllPrefectures(): Promise<Prefecture[]> {
     })
     .then((response: ApiResponse) => {
       const newPrefectures: Prefecture[] = response.result.map(
-        (result: { prefCode: number; prefName: string }) => {
+        (result: { code: number; name: string }) => {
           return {
-            code: result.prefCode,
-            name: result.prefName,
+            ...result,
             isSelected: false,
             graphValues: null,
           } satisfies Prefecture;
