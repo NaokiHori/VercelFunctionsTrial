@@ -3,6 +3,7 @@ import { createRoot, Root } from "react-dom/client";
 import { usePrefectures } from "./Prefectures/hooks";
 import { Prefectures } from "./Prefectures/Prefectures";
 import { Graph } from "./Graph/Graph";
+import "./theme.css";
 
 function Header(): JSX.Element {
   return <h1>都道府県別 総人口推移グラフ</h1>;
