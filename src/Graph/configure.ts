@@ -1,4 +1,4 @@
-import type { Prefecture } from "../types";
+import type { Prefecture, GraphValues } from "../types";
 
 const colorList = [
   "#2caffe",
@@ -25,15 +25,43 @@ function getSymbol(code: number): string {
   return symbolList[Math.floor(code / colorList.length) % symbolList.length];
 }
 
+function selectGraphValues(
+  graphValues: GraphValues | null,
+  index: number,
+): number[][] {
+  if (!graphValues) {
+    throw new Error("falsy graphValues are passed, which is unexpected");
+  }
+  switch (index) {
+    case 0: {
+      return graphValues.total;
+    }
+    case 1: {
+      return graphValues.junior;
+    }
+    case 2: {
+      return graphValues.middleAged;
+    }
+    case 3: {
+      return graphValues.senior;
+    }
+    default: {
+      throw new Error(`unknown graph values specified: ${index.toString()}`);
+    }
+  }
+}
+
 export function configureHighCharts(
   prefectures: Prefecture[],
+  metricTypes: string[],
+  metricTypeIndex: number,
 ): Highcharts.Options {
   return {
     accessibility: {
       enabled: false,
     },
     title: {
-      text: "Title",
+      text: metricTypes[metricTypeIndex],
     },
     chart: {
       allowMutatingData: false,
@@ -51,7 +79,7 @@ export function configureHighCharts(
       .map((prefecture: Prefecture) => {
         return {
           type: "line",
-          data: prefecture.graphValues ? prefecture.graphValues.total : [[]],
+          data: selectGraphValues(prefecture.graphValues, metricTypeIndex),
           name: prefecture.name,
           color: getColor(prefecture.code),
           marker: {
