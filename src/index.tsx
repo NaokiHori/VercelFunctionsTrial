@@ -13,7 +13,7 @@ function App(): JSX.Element {
   return (
     <div>
       <Header />
-      <Prefectures />
+      <Prefectures prefectures={prefectures} />
       <Graph prefectures={prefectures} />
     </div>
   );
