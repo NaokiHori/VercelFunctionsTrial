@@ -1,8 +1,20 @@
 import React from "react";
 import { createRoot, Root } from "react-dom/client";
+import { Prefectures } from "./Prefectures/Prefectures";
+import { Graph } from "./Graph/Graph";
+
+function Header(): JSX.Element {
+  return <h1>都道府県別 総人口推移グラフ</h1>;
+}
 
 function App(): JSX.Element {
-  return <></>;
+  return (
+    <div>
+      <Header />
+      <Prefectures />
+      <Graph />
+    </div>
+  );
 }
 
 const id = "root";
