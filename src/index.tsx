@@ -1,5 +1,6 @@
 import React from "react";
 import { createRoot, Root } from "react-dom/client";
+import { usePrefectures } from "./Prefectures/hooks";
 import { Prefectures } from "./Prefectures/Prefectures";
 import { Graph } from "./Graph/Graph";
 
@@ -8,11 +9,12 @@ function Header(): JSX.Element {
 }
 
 function App(): JSX.Element {
+  const prefectures = usePrefectures();
   return (
     <div>
       <Header />
       <Prefectures />
-      <Graph />
+      <Graph prefectures={prefectures} />
     </div>
   );
 }
