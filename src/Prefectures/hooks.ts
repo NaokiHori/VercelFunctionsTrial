@@ -2,10 +2,15 @@ import React from "react";
 import type { Prefecture } from "../types";
 import { fetchAllPrefectures } from "./fetchAllPrefectures";
 
+export interface PrefHandlers {
+  updatePrefecture: (newPrefecture: Prefecture) => void;
+}
+
 export function usePrefectures(): [
   prefectures: Prefecture[],
   isLoaded: boolean,
   isError: boolean,
+  prefHandlers: PrefHandlers,
 ] {
   const [prefectures, setPrefectures] = React.useState<Prefecture[]>(
     new Array<Prefecture>(),
@@ -29,5 +34,23 @@ export function usePrefectures(): [
         setIsLoaded(true);
       });
   }, []);
-  return [prefectures, isLoaded, isError];
+  // 選択状態や人口データ更新によるPrefectureの変更を担うハンドラ
+  const updatePrefecture = (newPrefecture: Prefecture): void => {
+    setPrefectures((prefectures: Prefecture[]) => {
+      const newPrefectures: Prefecture[] = prefectures.map(
+        (prefecture: Prefecture): Prefecture => {
+          if (newPrefecture.code !== prefecture.code) {
+            return prefecture;
+          } else {
+            return newPrefecture;
+          }
+        },
+      );
+      return newPrefectures;
+    });
+  };
+  const prefHandlers: PrefHandlers = {
+    updatePrefecture,
+  };
+  return [prefectures, isLoaded, isError, prefHandlers];
 }

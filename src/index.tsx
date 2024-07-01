@@ -9,7 +9,7 @@ function Header(): JSX.Element {
 }
 
 function App(): JSX.Element {
-  const [prefectures, isLoaded, isError] = usePrefectures();
+  const [prefectures, isLoaded, isError, prefHandlers] = usePrefectures();
   if (isError) {
     return <div>ERROR: Failed to fetch prefectures</div>;
   } else if (!isLoaded) {
@@ -18,7 +18,7 @@ function App(): JSX.Element {
     return (
       <div>
         <Header />
-        <Prefectures prefectures={prefectures} />
+        <Prefectures prefectures={prefectures} prefHandlers={prefHandlers} />
         <Graph prefectures={prefectures} />
       </div>
     );
