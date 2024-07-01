@@ -9,14 +9,20 @@ function Header(): JSX.Element {
 }
 
 function App(): JSX.Element {
-  const prefectures = usePrefectures();
-  return (
-    <div>
-      <Header />
-      <Prefectures prefectures={prefectures} />
-      <Graph prefectures={prefectures} />
-    </div>
-  );
+  const [prefectures, isLoaded, isError] = usePrefectures();
+  if (isError) {
+    return <div>ERROR: Failed to fetch prefectures</div>;
+  } else if (!isLoaded) {
+    return <div>Loading prefectures now...</div>;
+  } else {
+    return (
+      <div>
+        <Header />
+        <Prefectures prefectures={prefectures} />
+        <Graph prefectures={prefectures} />
+      </div>
+    );
+  }
 }
 
 const id = "root";
