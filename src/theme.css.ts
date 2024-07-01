@@ -7,6 +7,10 @@ export const colors = {
   border: "#4488ff",
 };
 
+export const metrics = {
+  borderWidth: "2px",
+};
+
 globalStyle(":root", {
   fontFamily: "Arial",
   fontSize: "small",

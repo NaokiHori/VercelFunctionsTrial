@@ -4,20 +4,21 @@ import { usePrefectures } from "./Prefectures/hooks";
 import { Prefectures } from "./Prefectures/Prefectures";
 import { Graph } from "./Graph/Graph";
 import "./theme.css";
+import * as style from "./styles.css";
 
 function Header(): JSX.Element {
-  return <h1>都道府県別 総人口推移グラフ</h1>;
+  return <h1 className={style.header}>都道府県別 総人口推移グラフ</h1>;
 }
 
 function App(): JSX.Element {
   const [prefectures, isLoaded, isError, prefHandlers] = usePrefectures();
   if (isError) {
-    return <div>ERROR: Failed to fetch prefectures</div>;
+    return <div className={style.app}>ERROR: Failed to fetch prefectures</div>;
   } else if (!isLoaded) {
-    return <div>Loading prefectures now...</div>;
+    return <div className={style.app}>Loading prefectures now...</div>;
   } else {
     return (
-      <div>
+      <div className={style.app}>
         <Header />
         <Prefectures prefectures={prefectures} prefHandlers={prefHandlers} />
         <Graph prefectures={prefectures} />
